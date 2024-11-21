@@ -1,0 +1,7 @@
+{
+  "name": "cec",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
