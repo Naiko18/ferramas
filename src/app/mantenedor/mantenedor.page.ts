@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ServiceService } from 'src/app/service.service';
-import { AlertController } from '@ionic/angular';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { ServiceService } from '../service.service';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 export function mayorDeEdadValidator(control: AbstractControl): ValidationErrors | null {
-  
   const fechaNacimiento = new Date(control.value);
   const year2024 = new Date('2024-01-01');
 
@@ -20,66 +15,93 @@ export function mayorDeEdadValidator(control: AbstractControl): ValidationErrors
 }
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.page.html',
-  styleUrls: ['./registro.page.scss'],
+  selector: 'app-mantenedor',
+  templateUrl: './mantenedor.page.html',
+  styleUrls: ['./mantenedor.page.scss'],
 })
 
-export class RegistroPage implements OnInit {
+export class MantenedorPage implements OnInit {
 
   usuario: FormGroup; 
-  usuarios: FormGroup[] = [];
-  alertButtons = ['Aceptar'];
+  usuarios: FormGroup[] = []; 
+  showAlert = false;
+  isEditing: boolean = false;
+  editingUsuario: FormGroup | null = null;
 
-  constructor(private route: Router, private service: ServiceService, private alertController: AlertController) {
 
+  constructor(private service: ServiceService) {
     this.usuario = new FormGroup({
   
       nom_usuario: new FormControl('',[Validators.required,Validators.pattern("[a-z]{3,10}")]),
       contraseña: new FormControl('',[Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
       rep_contraseña: new FormControl('',[Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
-      correo: new FormControl('',[Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@gmail.com")]),
+      correo: new FormControl('',[Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
       rut: new FormControl('',[Validators.required, this.validarRut() ,Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
       fec_nacimiento: new FormControl('',[Validators.required, mayorDeEdadValidator]),
       genero: new FormControl('',[Validators.required]),
-      tip_user: new FormControl('',[])  
-      },  
-      { validators: this.passwordsMatchValidator('contraseña', 'rep_contraseña') });
-
+      pos_vehiculo: new FormControl('',[]),
+      patente: new FormControl('',[Validators.pattern(/^[A-Z]{2} [A-Z]{2} \d{1,}$/)]),  
+      cantidad_asientos: new FormControl('',[]),
+      mod_vehi: new FormControl('',[]),  
+      tip_user: new FormControl('',[Validators.required])
+    },  
+    { validators: this.passwordsMatchValidator('contraseña', 'rep_contraseña') });
    }
 
-  ngOnInit() {
-  }
-  
-  public usuario_registrado(): void {
-    if (this.usuario.valid) {
-      console.log(this.usuario.value);
-     
-      this.presentAlert("Te has registrado con éxito");
-      this.route.navigate(['/login']);
-    } else {
-      
-      this.presentAlert("Por favor, completa todos los campos correctamente.");
-    }
+   ngOnInit() {
+    this.obtenerUsuarios(); 
   }
 
   agregarUsuario() {
     if (this.usuario.valid) {
         const exito = this.service.agregarUsuario(this.usuario.value);
+        if (exito) {
+            this.obtenerUsuarios(); 
+            this.resetForm();
+        }
     } else {
         console.log('Formulario no válido:', this.usuario.errors);
     }
   }
 
-  private async presentAlert(message: string) {
-    const alert = await this.alertController.create({
-      header: 'Alerta',
-      message: message,
-      buttons: this.alertButtons
-      
+  deleteUsuario(rut: string) {
+    const result = this.service.eliminarUsuario(rut);
+    if (result) {
+      console.log('Usuario eliminado:', rut);
+      this.obtenerUsuarios();
+    } else {
+      console.log('Usuario no encontrado para eliminar:', rut);
+    }
+  }
+
+  editUsuario(usuario: FormGroup) {
+    this.editingUsuario = usuario;
+    this.isEditing = true; 
+    this.usuario.patchValue({
+      nom_usuario: usuario.get('nom_usuario')?.value,
+      contraseña: usuario.get('contraseña')?.value,
+      correo: usuario.get('correo')?.value,
+      rut: usuario.get('rut')?.value,
+      fec_nacimiento: usuario.get('fec_nacimiento')?.value,
+      genero: usuario.get('genero')?.value
     });
-   
-    await alert.present();
+  }
+
+  confirmEdit() {
+    if (this.editingUsuario) {
+      this.service.modificarUsuario(this.editingUsuario.get('rut')?.value, this.usuario);
+      this.isEditing = false; 
+      this.editingUsuario = null; 
+      this.obtenerUsuarios();
+    }
+  }
+
+  resetForm() {
+    this.usuario.reset();
+  }
+
+  obtenerUsuarios() {
+    this.usuarios = this.service.obtenerUsuarios();
   }
 
   validarRut(): ValidatorFn {

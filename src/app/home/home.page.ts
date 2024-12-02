@@ -7,6 +7,21 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  usuario: any;
+
   constructor() {}
+
+  ngOnInit() {
+    this.usuario = JSON.parse(localStorage.getItem("usuario") || '');
+  }
+
+  onTabChange(event: any) {
+    const tabButtons = document.querySelectorAll('ion-tab-button');
+    tabButtons.forEach((tabButton: any) => {
+      tabButton.classList.remove('tab-selected');
+    });
+    event.target.classList.add('tab-selected');
+  }
+
 
 }

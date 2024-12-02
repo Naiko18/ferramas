@@ -1,13 +1,72 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>CEC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+
+  <div class="container">
+
+    <ion-img src="assets/cec.png"></ion-img>
+
+    <div class="rectangulo">
+      <style>
+        .rectangulo {
+            width: 100vw; 
+            height: 70vh; 
+            border-radius: 1% 10% 0 0;
+            margin: 0; 
+            display: block; 
+            flex-direction: column;
+            background-color: #ffffff;
+            padding: 60px; 
+            box-sizing: border-box; 
+            overflow-y: auto;
+        }
+        
+        .container {
+            display: flex; 
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: stretch;
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+        }
+
+        .titulo {
+            font-size: 24px; 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+        }
+
+        .subtitulo {
+            font-size: 16px; 
+            margin-bottom: 30px; 
+            color: gray; 
+        }
+
+        ion-input {
+            --border-radius: 20px; 
+            --padding-start: 10px; 
+            --padding-end: 10px; 
+            --background: white; 
+        }
+      </style>
+
+  <div class="titulo">INICIAR SESIÓN</div>
+  <div class="subtitulo">Inicie sesión para continuar</div>
+
+  <ion-input [(ngModel)]="nombre_user" type="text" fill="outline" label="Usuario" labelPlacement="floating"></ion-input>
+  <br>
+  <ion-input [(ngModel)]="contra_user" type="password" fill="outline" label="Contraseña" labelPlacement="floating"></ion-input>
+  <br>
+  <ion-button (click)="ingresarLogin()" color="dark" expand="block">Ingresar</ion-button>
+  <br>
+  <ion-label class="label1"><a routerLink="/registro">¿No tienes cuenta? Regístrate aquí</a></ion-label>
+  <br>
+  <ion-label class="label1"><a routerLink="/recuperar">¿Olvidaste tu contraseña?</a></ion-label>
+    </div>
+  </div>
 </ion-content>

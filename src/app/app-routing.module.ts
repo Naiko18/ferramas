@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -18,6 +18,18 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'mantenedor',
+    loadChildren: () => import('./mantenedor/mantenedor.module').then( m => m.MantenedorPageModule)
+  },
+  {
+    path: 'iniciotaller',
+    loadChildren: () => import('./iniciotaller/iniciotaller.module').then( m => m.IniciotallerPageModule)
   },
 ];
 

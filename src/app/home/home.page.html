@@ -1,20 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-tab-button tab="inicio-app" (click)="onTabChange($event)">
+        <ion-icon name="home-sharp"></ion-icon>
+        <label for="inicio-app">Inicio</label>
+      </ion-tab-button>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+      <ion-tab-button tab="mantenedor" *ngIf="usuario.tip_user=='Administrador'" (click)="onTabChange($event)">
+        <ion-icon name="construct-sharp"></ion-icon>
+        <label for="mantenedor">Administración</label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="perfil" (click)="onTabChange($event)">
+        <ion-icon name="person-sharp"></ion-icon>
+        <label for="perfil">Perfil</label>
+      </ion-tab-button>
+      <!--
+      <ion-tab-button tab="administrador" *ngIf="usuario.tip_user=='Administrador'" (click)="onTabChange($event)">
+        <ion-icon name="construct-sharp"></ion-icon>
+        <label for="administrador">Administración</label>
+      </ion-tab-button>
+      -->
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
