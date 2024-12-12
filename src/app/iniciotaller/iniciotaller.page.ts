@@ -29,7 +29,7 @@ export class IniciotallerPage implements OnInit {
   async tomarTaller(nombreTaller: string) {
     const alert = await this.alertController.create({
       header: '¡Taller tomado con éxito! 🎉',
-      message: `Has tomado el taller: <strong>${nombreTaller}</strong>. ¡Te esperamos!`,
+      message: `Has tomado el taller: ${nombreTaller}. ¡Te esperamos!`,
       buttons: ['OK']
     });
 
