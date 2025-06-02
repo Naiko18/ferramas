@@ -14,13 +14,13 @@
       <style>
         .rectangulo {
             width: 100vw; 
-            height: 70vh; 
-            border-radius: 1% 10% 0 0;
+            height: 80vh; 
+            border-radius: 1% 1% 0 0;
             margin: 0; 
             display: block; 
             flex-direction: column;
             background-color: #ffffff;
-            padding: 60px; 
+            padding: 30px; 
             box-sizing: border-box; 
             overflow-y: auto;
         }
@@ -62,11 +62,10 @@
   <br>
   <ion-input [(ngModel)]="contra_user" type="password" fill="outline" label="Contraseña" labelPlacement="floating"></ion-input>
   <br>
-  <ion-button (click)="ingresarLogin()" color="dark" expand="block">Ingresar</ion-button>
+  <ion-button (click)="ingresarLogin()" color="dark" expand="block" shape="round">Ingresar</ion-button>
   <br>
   <ion-label class="label1"><a routerLink="/registro">¿No tienes cuenta? Regístrate aquí</a></ion-label>
   <br>
-  <ion-label class="label1"><a routerLink="/recuperar">¿Olvidaste tu contraseña?</a></ion-label>
     </div>
   </div>
 </ion-content>

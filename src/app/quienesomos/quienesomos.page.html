@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-content">
+      <ion-img class="logo" src="assets/cec.png"></ion-img>
+      <div class="icon-group">
+        <ion-menu-button autoHide="false" menu="customMenu" aria-label="Abrir menú"></ion-menu-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="end" menuId="customMenu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar style="background-color: #746d61;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-list style="color: black;">
+      <ion-item (click)="IrSoporte()">
+        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Soporte</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrNotificaciones()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Notificaciones</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrQuieneSomos()">
+        <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">¿Quíenes somos?</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrContacto()">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contacto</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Vendedor'" (click)="IrVentas()">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Ventas</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Bodeguero'" (click)="IrBodeguero()">
+        <ion-icon name="layers-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Bodeguero</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Contador'" (click)="IrContador()">
+        <ion-icon name="calculator-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contador</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Administrador'" (click)="IrAdministrador()">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Administrador</ion-label>
+      </ion-item>
+
+      <ion-item (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Cerrar sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="8" offset-md="2">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>¿Quiénes somos?</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>
+              Somos <strong>Ferremas</strong>, una empresa dedicada a la venta de herramientas y materiales
+              de ferretería con más de 20 años de experiencia en el mercado chileno. Nuestra misión es
+              ofrecer productos de calidad con un excelente servicio al cliente.
+            </p>
+
+            <ion-img src="assets/cec.png" alt="Foto de la empresa" style="margin: 1rem 0; border-radius: 12px;"></ion-img>
+
+            <h3>Nuestra historia</h3>
+            <p>
+              Fundada en 2003, Ferremas comenzó como una pequeña tienda familiar en Santiago de Chile.
+              Con esfuerzo y dedicación, hemos crecido hasta convertirnos en una referencia en el sector,
+              siempre manteniendo nuestros valores de honestidad, compromiso y calidad.
+            </p>
+
+            <h3>Valores</h3>
+            <ion-list>
+              <ion-item>
+                <ion-icon name="checkmark-circle-outline" slot="start" color="success"></ion-icon>
+                <ion-label>Compromiso con el cliente</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="checkmark-circle-outline" slot="start" color="success"></ion-icon>
+                <ion-label>Calidad en nuestros productos</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="checkmark-circle-outline" slot="start" color="success"></ion-icon>
+                <ion-label>Innovación constante</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="checkmark-circle-outline" slot="start" color="success"></ion-icon>
+                <ion-label>Responsabilidad social</ion-label>
+              </ion-item>
+            </ion-list>
+
+            <h3>Equipo</h3>
+            <p>
+              Contamos con un equipo profesional, apasionado y comprometido, listo para asesorarte
+              y ayudarte a encontrar las mejores soluciones para tus proyectos.
+            </p>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" size-sm="4" *ngFor="let miembro of equipo">
+                  <ion-card>
+                    <ion-img [src]="miembro.foto" alt="{{miembro.nombre}}"></ion-img>
+                    <ion-card-header>
+                      <ion-card-title>{{miembro.nombre}}</ion-card-title>
+                      <ion-card-subtitle>{{miembro.cargo}}</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <h3 style="margin-top: 2rem;">Contacto</h3>
+            <p>
+              Puedes visitarnos en <strong>Av. Siempre Viva 742, Springfield</strong>, llamarnos al
+              <strong>+56 9 1111 1111</strong> o escribirnos a
+              <a href="mailto:contacto@ferremas.cl">contacto&#64;ferremas.cl</a>.
+            </p>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

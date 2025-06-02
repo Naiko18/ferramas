@@ -38,11 +38,11 @@ export class RegistroPage implements OnInit {
       nom_usuario: new FormControl('',[Validators.required,Validators.pattern("[a-z]{3,10}")]),
       contraseña: new FormControl('',[Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
       rep_contraseña: new FormControl('',[Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
-      correo: new FormControl('',[Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@gmail.com")]),
+      correo: new FormControl('',[Validators.required, Validators.email]),
       rut: new FormControl('',[Validators.required, this.validarRut() ,Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
       fec_nacimiento: new FormControl('',[Validators.required, mayorDeEdadValidator]),
       genero: new FormControl('',[Validators.required]),
-      tip_user: new FormControl('',[])  
+      tip_user: new FormControl('cliente', []) 
       },  
       { validators: this.passwordsMatchValidator('contraseña', 'rep_contraseña') });
 

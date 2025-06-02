@@ -1,0 +1,64 @@
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* separa contenido e íconos */
+  background-color: #746d61;
+  color: white;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.logo {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+ion-searchbar {
+  flex: 1;
+  max-width: 600px;
+  margin-right: 16px;
+}
+
+.icon-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+ion-icon {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 10px;
+  padding: 10px;
+}
+
+.carousel-slide {
+  flex: 0 0 80vw;
+  scroll-snap-align: start;
+  background: #eee;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.carousel-slide img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.texto1{
+
+  cursor: pointer;
+  
+}

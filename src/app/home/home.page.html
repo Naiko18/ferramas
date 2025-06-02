@@ -1,27 +1,228 @@
-<ion-content>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-content">
+      <ion-img class="logo" src="assets/cec.png"></ion-img>
 
-      <ion-tab-button tab="inicio-app" (click)="onTabChange($event)">
-        <ion-icon name="home-sharp"></ion-icon>
-        <label for="inicio-app">Inicio</label>
-      </ion-tab-button>
+      <ion-searchbar
+        placeholder="Buscar"
+        (ionInput)="filtrarProductos($event)"
+      ></ion-searchbar>
 
-      <ion-tab-button tab="mantenedor" *ngIf="usuario.tip_user=='Administrador'" (click)="onTabChange($event)">
-        <ion-icon name="construct-sharp"></ion-icon>
-        <label for="mantenedor">Administración</label>
-      </ion-tab-button>
+      <div class="icon-group">
+        <ion-icon name="person" (click)="IrInicioSesion()" aria-label="Iniciar sesión"></ion-icon>
+        <ion-icon name="cart" id="open-modal" aria-label="Carrito de compras"></ion-icon>
 
-      <ion-tab-button tab="perfil" (click)="onTabChange($event)">
-        <ion-icon name="person-sharp"></ion-icon>
-        <label for="perfil">Perfil</label>
-      </ion-tab-button>
-      <!--
-      <ion-tab-button tab="administrador" *ngIf="usuario.tip_user=='Administrador'" (click)="onTabChange($event)">
-        <ion-icon name="construct-sharp"></ion-icon>
-        <label for="administrador">Administración</label>
-      </ion-tab-button>
-      -->
-    </ion-tab-bar>
-  </ion-tabs>
+      
+        <ion-menu-button autoHide="false" menu="customMenu" menuId="customMenu" aria-label="Abrir menú"></ion-menu-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="end" menuId="customMenu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar style="background-color: #746d61;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list style="color: black;">
+      <ion-item (click)="IrSoporte()">
+        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Soporte</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrNotificaciones()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Notificaciones</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrQuieneSomos()">
+        <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">¿Quíenes somos?</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrContacto()">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contacto</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Vendedor'" (click)="IrVentas()">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Ventas</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Bodeguero'" (click)="IrBodeguero()">
+        <ion-icon name="layers-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Bodeguero</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Contador'" (click)="IrContador()">
+        <ion-icon name="calculator-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contador</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Administrador'" (click)="IrAdministrador()">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Administrador</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="log-out-outline" slot="start" (click)="cerrarSesion()"></ion-icon>
+        <ion-label class="texto1" (click)="cerrarSesion()">Cerrar sesión</ion-label>
+      </ion-item>
+      
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content">
+  <div class="carousel-container">
+    <div class="carousel-slide" *ngFor="let item of items">
+      <img [src]="item.image" alt="{{ item.title }}" />
+    </div>
+  </div>
+
+  <section class="productos-section">
+    <!-- Productos en Promoción -->
+    <h2>Productos en Promoción</h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="3" *ngFor="let producto of productosPromocion">
+          <ion-card>
+            <!-- El div con click para expandir, excepto botón -->
+            <div (click)="toggleExpandirProducto(producto.sku)">
+              <img [src]="producto.imagen || 'assets/default-product.png'" alt="{{ producto.nombre }}" />
+              <ion-card-header>
+                <ion-card-title>{{ producto.nombre }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Precio: {{ producto.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
+                <p>Marca: {{ producto.marca }}</p>
+
+                <!-- Mostrar descripción solo si está expandido -->
+                <div *ngIf="productoExpandidoId === producto.sku">
+                  <p>Descripción: {{ producto.descripcion }}</p>
+                  <!-- Puedes agregar más detalles aquí -->
+                </div>
+              </ion-card-content>
+            </div>
+            <ion-button expand="block" color="dark" (click)="agregarAlCarrito(producto); $event.stopPropagation()">
+              Agregar producto
+            </ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Lanzamientos Recientes -->
+    <h2>Lanzamientos Recientes</h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="3" *ngFor="let producto of lanzamientosRecientes">
+          <ion-card>
+            <div (click)="toggleExpandirProducto(producto.sku)">
+              <img [src]="producto.imagen || 'assets/default-product.png'" alt="{{ producto.nombre }}" />
+              <ion-card-header>
+                <ion-card-title>{{ producto.nombre }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Precio: {{ producto.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
+                <p>Marca: {{ producto.marca }}</p>
+
+                <div *ngIf="productoExpandidoId === producto.sku">
+                  <p>Descripción: {{ producto.descripcion }}</p>
+                </div>
+              </ion-card-content>
+            </div>
+            <ion-button expand="block" color="dark" (click)="agregarAlCarrito(producto); $event.stopPropagation()">
+              Agregar producto
+            </ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Categorías -->
+    <h2>Categorías</h2>
+    <div *ngFor="let categoria of categorias">
+      <h3>{{ categoria.nombre }}</h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="3" *ngFor="let producto of categoria.productos">
+            <ion-card>
+              <div (click)="toggleExpandirProducto(producto.sku)">
+                <img [src]="producto.imagen || 'assets/default-product.png'" alt="{{ producto.nombre }}" />
+                <ion-card-header>
+                  <ion-card-title>{{ producto.nombre }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <p>Precio: {{ producto.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
+                  <p>Marca: {{ producto.marca }}</p>
+
+                  <div *ngIf="productoExpandidoId === producto.sku">
+                    <p>Descripción: {{ producto.descripcion }}</p>
+                  </div>
+                </ion-card-content>
+              </div>
+              <ion-button expand="block" color="dark" (click)="agregarAlCarrito(producto); $event.stopPropagation()">
+                Agregar producto
+              </ion-button>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </section>
+
+  <!-- Modal carrito igual que antes, con mejoras visuales en CSS -->
+  <ion-modal
+    trigger="open-modal"
+    [initialBreakpoint]="0.25"
+    [breakpoints]="[0, 0.5, 0.75]"
+    handleBehavior="cycle"
+  >
+    <ng-template>
+      <ion-content class="ion-padding">
+        <h2>Carrito de compras</h2>
+
+        <ion-list *ngIf="carrito.length > 0; else carritoVacio">
+          <ion-item *ngFor="let item of carrito">
+            <ion-label>
+              <h3>{{ item.nombre }}</h3>
+              <p>Marca: {{ item.marca }}</p>
+              <p>Precio unitario: {{ item.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
+              <p>Cantidad: {{ item.cantidad }}</p>
+              <p><strong>Total: {{ item.precio * item.cantidad | currency:'CLP':'symbol':'1.0-0' }}</strong></p>
+            </ion-label>
+            <ion-button color="danger" fill="clear" (click)="eliminarDelCarrito(item)">
+              <ion-icon name="trash-outline" style="font-size: 20px;"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+
+        <ion-item lines="none" *ngIf="carrito.length > 0">
+          <ion-label>
+            <h3>Total general:</h3>
+          </ion-label>
+          <ion-note slot="end">
+            <strong>{{ getTotalCarrito() | currency:'CLP':'symbol':'1.0-0' }}</strong>
+          </ion-note>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          color="dark"
+          (click)="continuarConLaCompra()"
+        >
+          Continuar con la compra
+        </ion-button>
+
+        <ng-template #carritoVacio>
+          <p>El carrito está vacío.</p>
+        </ng-template>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

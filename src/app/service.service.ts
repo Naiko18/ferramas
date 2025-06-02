@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Usuario {
   nom_usuario: string;
@@ -13,9 +15,20 @@ export interface Usuario {
   tip_user?: string; 
 }
 
+export interface Producto {
+  ID_PRODUCTO: number;
+  SKU_PRODUCTO?: string;
+  NOMBRE_PRODUCTO?: string;
+  DESCRIPCION_PRODUCTO?: string;
+  PRECIO_UNITARIO?: number;
+  ID_MARCA?: number;
+}
+
 export function mayorDeEdadValidator(control: AbstractControl): ValidationErrors | null {
   const fechaNacimiento = new Date(control.value);
   const year2024 = new Date('2024-01-01');
+
+  
 
   const edad = year2024.getFullYear() - fechaNacimiento.getFullYear();
   const diferenciaMes = year2024.getMonth() - fechaNacimiento.getMonth();
@@ -42,11 +55,44 @@ export class ServiceService {
       nom_usuario: 'admin',
       contraseña: 'Admin@123',
       rep_contraseña: 'Admin@123',
-      correo: 'admin@duocuc.cl',
+      correo: 'admin@ferramas.cl',
       rut: '33333333-3',
       fec_nacimiento: '2000-01-01',
       genero: 'Otro',
       tip_user: 'Administrador'
+    });
+
+    this.agregarUsuario({
+      nom_usuario: 'vendedor',
+      contraseña: 'Vende@444',
+      rep_contraseña: 'Vende@444',
+      correo: 'vendedor@ferramas.cl',
+      rut: '44444444-4',
+      fec_nacimiento: '2000-01-01',
+      genero: 'Otro',
+      tip_user: 'Vendedor'
+    });
+
+    this.agregarUsuario({
+      nom_usuario: 'contador',
+      contraseña: 'Conta@555',
+      rep_contraseña: 'Conta@555',
+      correo: 'contador@ferramas.cl',
+      rut: '55555555-5',
+      fec_nacimiento: '2000-01-01',
+      genero: 'Otro',
+      tip_user: 'Contador'
+    });
+
+    this.agregarUsuario({
+      nom_usuario: 'bodeguero',
+      contraseña: 'Bodeg@666',
+      rep_contraseña: 'Bodeg@666',
+      correo: 'bodeguero@ferramas.cl',
+      rut: '77777777-7',
+      fec_nacimiento: '2000-01-01',
+      genero: 'Otro',
+      tip_user: 'Bodeguero'
     });
   }
 
@@ -60,7 +106,7 @@ export class ServiceService {
         nom_usuario: new FormControl(nuevoUsuario.nom_usuario, [Validators.required, Validators.pattern("[a-z]{3,10}")]),
         contraseña: new FormControl(nuevoUsuario.contraseña, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
         rep_contraseña: new FormControl(nuevoUsuario.rep_contraseña, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)]),
-        correo: new FormControl(nuevoUsuario.correo, [Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
+        correo: new FormControl(nuevoUsuario.correo, [Validators.required, Validators.email]),
         rut: new FormControl(nuevoUsuario.rut, [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
         fec_nacimiento: new FormControl(nuevoUsuario.fec_nacimiento, [Validators.required, mayorDeEdadValidator]),
         genero: new FormControl(nuevoUsuario.genero, [Validators.required]),

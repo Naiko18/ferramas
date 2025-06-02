@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-content">
+      <ion-img class="logo" src="assets/cec.png"></ion-img>
+
+      <div class="icon-group">
+        <ion-menu-button autoHide="false" menu="customMenu" aria-label="Abrir menú"></ion-menu-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="end" menuId="customMenu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar style="background-color: #746d61;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-list style="color: black;">
+      <ion-item (click)="IrSoporte()">
+        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Soporte</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrNotificaciones()">
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Notificaciones</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrQuieneSomos()">
+        <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">¿Quíenes somos?</ion-label>
+      </ion-item>
+
+      <ion-item (click)="IrContacto()">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contacto</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Vendedor'" (click)="IrVentas()">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Ventas</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Bodeguero'" (click)="IrBodeguero()">
+        <ion-icon name="layers-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Bodeguero</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Contador'" (click)="IrContador()">
+        <ion-icon name="calculator-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Contador</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario.tip_user === 'Administrador'" (click)="IrAdministrador()">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Administrador</ion-label>
+      </ion-item>
+
+      <ion-item (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label class="texto1">Cerrar sesión</ion-label>
+      </ion-item>
+      
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="ion-padding">
+
+  <ion-grid>
+    <ion-row>
+      <!-- Información de contacto -->
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Contáctanos</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Estamos aquí para ayudarte. Puedes comunicarte con nosotros a través de los siguientes medios:</p>
+
+            <ion-item lines="none" class="ion-no-padding" style="margin-top: 1rem;">
+              <ion-icon slot="start" name="location-outline" size="large"></ion-icon>
+              <ion-label>
+                <h3>Dirección</h3>
+                <p>Av. Siempre Viva 742, Springfield</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item lines="none" class="ion-no-padding" style="margin-top: 1rem;">
+              <ion-icon slot="start" name="call-outline" size="large"></ion-icon>
+              <ion-label>
+                <h3>Teléfono</h3>
+                <p>+56 9 1111 1111</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item lines="none" class="ion-no-padding" style="margin-top: 1rem;">
+              <ion-icon slot="start" name="mail-outline" size="large"></ion-icon>
+              <ion-label>
+                <h3>Email</h3>
+                <a href="mailto:contacto@tusitio.cl">contacto&#64;ferremas.cl</a>
+              </ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Formulario -->
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Envíanos un mensaje</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form>
+              <ion-item>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input type="text" placeholder="Tu nombre"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Correo electrónico</ion-label>
+                <ion-input type="email" placeholder="tucorreo@ejemplo.com"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Mensaje</ion-label>
+                <ion-textarea rows="4" placeholder="Escribe tu mensaje..."></ion-textarea>
+              </ion-item>
+
+              <ion-button expand="block" color="dark" type="submit" style="margin-top: 1rem;">
+                Enviar
+              </ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

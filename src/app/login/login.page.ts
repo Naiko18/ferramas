@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
       
       localStorage.setItem('usuario', JSON.stringify(usuarioValido.value));
     
-      this.route.navigate(['/home/inicio-app']);
+      this.route.navigate(['/home']);
     } else {
       
       this.presentAlert('Usuario y/o Contraseña incorrectos');

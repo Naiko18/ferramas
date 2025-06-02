@@ -63,7 +63,7 @@
         <br>
         <ion-input formControlName="rep_contraseña" type="password" fill="outline" label="Repetir Contraseña" labelPlacement="floating" errorText="Formato invalido"></ion-input>
         <br>
-        <ion-input formControlName="correo" type="email" fill="outline" label="Correo" labelPlacement="floating" helperText="Ejemplo: ejemplo@duocuc.cl " errorText="Formato invalido"></ion-input>
+        <ion-input formControlName="correo" type="email" fill="outline" label="Correo" labelPlacement="floating" helperText="Ejemplo: ejemplo@gmail.com " errorText="Formato invalido"></ion-input>
         <br>
         <ion-input formControlName="rut" type="text" fill="outline" label="Rut" labelPlacement="floating" helperText="Ejemplo: 11111111-1 " errorText="Ingrese un rut valido"></ion-input>
         <br>
@@ -75,7 +75,7 @@
           <ion-select-option value="otro">Otro</ion-select-option>
         </ion-select>
         <br>
-        <ion-button (click)="agregarUsuario()" id="present-alert" type="submit" color="dark" expand="block"> Registrarse </ion-button>
+        <ion-button (click)="agregarUsuario()" id="present-alert" type="submit" color="dark" expand="block" shape="round"> Registrarse </ion-button>
         <ion-alert message="Te has registrado con exito" [buttons]="alertButtons"></ion-alert>
       </form>
     </div>

@@ -10,8 +10,8 @@ ion-header {
 }
 
 ion-img{
-    width: 50%; 
-    height: auto;
+    width: auto; 
+    height: 150px;
     object-fit: cover; 
     border-radius: 50%;
     margin-bottom: 20px;
@@ -22,6 +22,6 @@ ion-img{
 
 ion-content::part(background){
 
-    background: #8bb2ff;
+    background: #746d61;
     
 }
