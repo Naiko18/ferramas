@@ -119,4 +119,9 @@ async showErrorAlert() {
   await alert.present();
 }
 
+getTotalUSD(): number {
+  const tasaCambio = 950; // Cambia esto si deseas actualizarlo dinámicamente
+  return this.getTotal() / tasaCambio;
+}
+
 }

@@ -439,6 +439,12 @@ filtrarProductos(event: any) {
   });
 }
 
+getTotalCarritoUSD(): number {
+  const totalCLP = this.getTotalCarrito();
+  const tasaCambio = 950; // Ejemplo: 1 USD = 950 CLP
+  return totalCLP / tasaCambio;
+}
+
 
 }
   

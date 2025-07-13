@@ -204,10 +204,13 @@
 
         <ion-item lines="none" *ngIf="carrito.length > 0">
           <ion-label>
-            <h3>Total general:</h3>
+            <h3>Total:</h3>
           </ion-label>
-          <ion-note slot="end">
-            <strong>{{ getTotalCarrito() | currency:'CLP':'symbol':'1.0-0' }}</strong>
+          <ion-note slot="end" class="ion-text-end">
+            <strong>{{ getTotalCarrito() | currency:'CLP':'symbol':'1.0-0' }}</strong><br>
+            <small style="font-size: 0.75rem; color: gray;">
+              ({{ getTotalCarritoUSD() | currency:'USD':'symbol':'1.2-2' }})
+            </small>
           </ion-note>
         </ion-item>
 
