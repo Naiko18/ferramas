@@ -43,9 +43,12 @@
               <ion-label>Tarjeta de Débito</ion-label>
               <ion-radio slot="start" value="debito"></ion-radio>
             </ion-item>
+            <ion-item>
+              <ion-label>PayPal</ion-label>
+              <ion-radio slot="start" value="paypal"></ion-radio>
+            </ion-item>
           </ion-radio-group>
         </ion-list>
-        <br>
 
         <!-- Formulario Transferencia -->
         <div *ngIf="metodoPago === 'transferencia'">
@@ -63,7 +66,6 @@
             <ion-input type="text"></ion-input>
           </ion-item>
         </div>
-        <br>
 
         <!-- Formulario Tarjeta -->
         <div *ngIf="metodoPago === 'credito' || metodoPago === 'debito'">
@@ -89,7 +91,11 @@
             <ion-input type="password" maxlength="3"></ion-input>
           </ion-item>
         </div>
-        <br>
+
+        <!-- Formulario PayPal -->
+        <div *ngIf="metodoPago === 'paypal'">
+          <div id="paypal-button-container"></div>
+        </div>
 
         <h3 class="ion-margin-top">Tipo de Entrega</h3>
         <ion-radio-group [(ngModel)]="tipoEntrega">
@@ -123,7 +129,7 @@
             <ion-input type="text" [(ngModel)]="direccion.referencia"></ion-input>
           </ion-item>
         </div>
-
+ 
         <ion-button expand="block" color="dark" class="ion-margin-top" (click)="confirmarPago()">
           Confirmar Pago de {{ getTotal() | currency:'CLP':'symbol':'1.0-0' }}
         </ion-button>
