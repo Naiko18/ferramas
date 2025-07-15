@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceService } from '../service.service';
 import { AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -14,13 +15,15 @@ export class HomePage {
   usuario: any;
   carrito: any[] = [];
   productoExpandidoId: any = null;
+  valorDolar: number = 950;
 
   
 
   constructor(
       private route: Router, 
       private service: ServiceService, 
-      private alertController: AlertController
+      private alertController: AlertController,
+      private http: HttpClient
     ) {}
 
   ngOnInit() {
@@ -30,6 +33,18 @@ export class HomePage {
       if (carritoGuardado) {
         this.carrito = JSON.parse(carritoGuardado);
     }
+
+     // Obtener el valor del dólar desde la API
+  this.http.get<any>('https://mindicador.cl/api').subscribe({
+    next: data => {
+      if (data && data.dolar && data.dolar.valor) {
+        this.valorDolar = data.dolar.valor;
+      }
+    },
+    error: err => {
+      console.error('Error al obtener el valor del dólar:', err);
+    }
+  });
   }
 
   async cerrarSesion() {
@@ -441,8 +456,7 @@ filtrarProductos(event: any) {
 
 getTotalCarritoUSD(): number {
   const totalCLP = this.getTotalCarrito();
-  const tasaCambio = 950; // Ejemplo: 1 USD = 950 CLP
-  return totalCLP / tasaCambio;
+  return totalCLP / this.valorDolar;
 }
 
 
